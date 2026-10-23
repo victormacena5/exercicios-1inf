@@ -1,10 +1,11 @@
-
 const prompt = require("prompt-sync")()
 
+// RF01 - Dados da semana
 const quantidadeDeDias = Number(prompt("Quantidade de dias: "))
 const metaDiaria = Number(prompt("Meta diária: "))
 const metaSemanal = Number(prompt("Meta semanal: "))
 
+// RF02 - Total vendido na semana
 let totalVendido = 0
 let diasAcimaDaMeta = 0
 let melhorDia = 0
@@ -14,30 +15,38 @@ for (let dia = 1; dia <= quantidadeDeDias; dia++) {
 
     totalVendido += venda
 
-    if (venda > metaDiaria) {
+    // RF04 - Dias acima ou iguais à meta diária
+    if (venda >= metaDiaria) {
         diasAcimaDaMeta++
     }
 
-    if (dia === 1 || venda > melhorDia) {
+    // RF05 - Melhor dia de vendas
+    if (venda > melhorDia) {
         melhorDia = venda
     }
 }
 
+// RF03 - Média de vendas por dia
 const mediaVendas = totalVendido / quantidadeDeDias
 
-const situacaoSemana =
-    totalVendido >= metaSemanal
-        ? "Meta semanal atingida"
-        : "Meta semanal não atingida"
+// RF06 - Situação da semana
+const situacaoSemana = totalVendido >= metaSemanal
+    ? "Meta semanal atingida"
+    : "Meta semanal não atingida"
 
-const resumo = `Total vendido: ${totalVendido}
-Média diária: ${mediaVendas}
+// Resumo utilizando template string
+const resumo = `
+----- RELATÓRIO DE VENDAS DA PAPELARIA -----
+Total vendido: ${totalVendido}
+Média: ${mediaVendas}
 Dias acima da meta: ${diasAcimaDaMeta}
-Melhor dia de vendas: ${melhorDia}
-Situação da semana: ${situacaoSemana}`
+Melhor dia: ${melhorDia}
+${situacaoSemana}
+`
 
 console.log(resumo)
 
+// Exportação para os testes automáticos
 module.exports = {
     quantidadeDeDias,
     metaDiaria,
